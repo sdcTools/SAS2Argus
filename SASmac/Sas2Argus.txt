@@ -1,0 +1,155 @@
+ ===========================================================================
+ Macro:        	SAS2Argus version 4.0 that works with the open source version of tau-Argus 4.1.3
+		([Se below for description of parameters])
+ ---------------------------------------------------------------------------
+ Description:  A SAS Macro which is the manifest of a "bridge" from SAS to
+               tau-Argus and reverse.
+
+ Purpose:      To make it possible to run tau-Argus from SAS to make 
+               disclosure of SAS dataset or any data in any format that can 
+               be accessed thru engines from within SAS.
+
+ Precondition: NONE - other then data have to be established in a fashion that
+               it will suite tau-ARGUS
+
+ Usage:        Set parameters and execute
+
+ Initial code: Anders Kraftling/Statistics Sweden/IT/1
+ Revised code: 
+ Date:         2011-03-23
+ Comment:      
+ ---------------------------------------------------------------------------
+ Changes:      
+ 4.0/Lars-Erik Almberg
+ This is a version that works with the open source version of tau-Argus 4.1.3
+ ===========================================================================
+
+ ===========================================================================
+ SAS2Argus Parameters
+ ---------------------------------------------------------------------------
+
+   ========================================================================
+   System parameters
+   ========================================================================
+   [Project]     Name used as a prefix for all files created for tau-Argus 
+                 within a job. Default set to SAS2ARGUS if not set explicit.
+   [RunArgus]    0 - Just create files but don't execute tau-ARGUS
+                 1 - (Default) Create files and executes tau-ARGUS
+                 2 - Don't create files, but do execute tau-ARGUS. (Gives an
+                     opportunity to edit the files manually)
+   [Debug]       0 - (Default) No extra information in the SAS log.
+                 1 - Boosts information to the SAS log. Even the log produ-
+                     ced by tau-ARGUS is included in the SAS-log.
+
+   ========================================================================
+   Input data to tau-ARGUS. 
+   ------------------------------------------------------------------------
+   Note: One of these two arguments are applicable. Either DATA or TABLE
+   ========================================================================
+   [InData]      Name of micro data SAS dataset
+   [InTable]     Name of aggregated SAS dataset
+
+   ========================================================================
+   Variables and their roles
+   ------------------------------------------------------------------------
+   Note: Mandatory would be Explanatory and Response. Others are optional.
+   ========================================================================
+   [Explanatory] Names of explanatory variables 
+   [Response]    Name of response variable
+   [Holding]     Name of variable identifing holding
+   [Shadow]      Name of shadow variable.    Default=Response
+   [Weight]      Name of weight variable
+   [Cost]        Name of cost variable.      Default=Response
+   [Lambda]      Value for Lambda.           Default=1
+   [Frequency]   Name of frequency variable. Default=Response
+   [LowerLevel]  Name of lowerlevel variable
+   [UpperLevel]  Name of upperlevel variable
+   [MaxScore]    Names of TopN variables
+   [Status]      Name of status variable
+
+   ========================================================================
+   RiskAssesment and eventually Secondary supression.
+   ------------------------------------------------------------------------
+   Note: If SUPRESS not set implies that only a risk assessment 
+         being performed.
+   ========================================================================
+   [SafetyRule]  Choices of risk assessment methods
+                  P    - Percent Rule where additional arguments specified 
+                         as P(p,n) where n is optional and the default set 
+                         to 1. P(20,3) represent percentage rule, where p=20 
+                         and n=3. N represents the number of intruders in 
+                         coalition. P the least accuracy of any disclosed 
+                         value.
+                  NK   - Dominance Rule where additional argument is specified 
+                         as NK(n,k) where n represents the number of items that 
+                         may not account for more than k percent of the contri-
+                         bution of the cell/domain. 
+                  ZERO - Margin of zero-cells in which additional argument 
+                         sets the ZERO (ZeroSafetyRange) and refer to the 
+                         size of the margin. 
+                  FREQ - The Frequency Rule in with additional argument is 
+                         specified as FREQ (MinFreq, FrequencySafetyRange) 
+                         where MinFreq specifies the minimum acceptable frequency 
+                         and FrequencySafetyRange indicates the safety margin 
+                         for not be able to derive the suppressed frequency.
+                  REQ  - "Request" rule - the request for confidentiality. 
+                         REQ(Percent1,Percent2,Safetymargin). For example, 
+                         if an informant accounts for 70% and in that case 
+                         have asked for protection. This requires an additional 
+                         variable in the table that indicates which items are 
+                         requested /not requested confidentiality with value 
+                         1 or 0. Variable name (for the role) is indicated by 
+                         parameter Request. 
+                  MIS  - Missing. If MIS=0 (which is the default) means that 
+                         the cells with a code for non-response is still 
+                         regarded as uncertain whether any SafetyRule is 
+                         violated. If MIS=1 then the cell i always considered 
+                         as secure, if at least one contributor has a missing 
+                         value, then it may be regarded that the contributor 
+                         with miss cannot be identified. In the SAS macro '9' 
+                         has been defined as representative value for missing 
+                         value. 
+                  WGT  - If WGT=0 (which is default) then weights is not used 
+                         when aggregating tables or in calculating the SafetyRule. 
+                         The name of the variable is indicated in the parameter 
+                         Weight. 
+                  MAN  - "Manual safety margin" (default = 20%). This manually-
+                         set safety margin is used only when the status is 
+                         provided for each cell or when an a priori file is used 
+                         to set the option that a particular cell is set manually 
+                         to be uncertain (Manual Unsafe). 
+                         
+   [Suppress]    Choice  of secondary suppression method
+                  GH   - GH(TabNo,AprioriBoundPercentage,ModelSize) GH-miter, or as it is usually called The Hypercube Method. Together with NET, the only methods available in t-ARGUS without access to commercial optimizers. The secondary suppress "mechanically" without regard to the optimization and is not recommended as a method since it often causes great loss of information in the table. 
+                  MOD  - MOD(TabNo,MaxTimePerSubtable) A partial method that breaks down a hierarchical table of several non-hierarchical tables, protects them, and finally composes a fully protected hierarchical table. With the MaxTimePerSubtable parameter it is possible to limit the optimizer to work with each subtabell. Is indicated in minutes. 
+                  OPT  - OPT(TabNo,MaxComputingTime) A method that protects a hierarchical table without breaking it down into smaller tables. By setting the maximum time it is possible to limit the time for the optimizer to work. Anges i minuter. Indicated in minutes. 
+                  NET  - NET(TabNo) Network Solutions to be used for large two-dimensional tables with a hierarchy. Requires some special circumstances but no optimizer. 
+   
+   
+   ========================================================================
+   Output data from tau-ARGUS
+   ------------------------------------------------------------------------
+   Note: If none is set. Nothing is produced from tau-ARGUS. Options are:
+      TABLE()  => VarName delimiter(,) Primary(x)   Secondary(-) 
+      PIVOT(0) => VarName                                          No Status
+      PIVOT(1) => VarName                                          Status
+      CODE(0)  => NoName  delimiter(,) Primary(-)   Secondary(x)   No status
+      CODE(1)  => NoName  delimiter(,) Primary(del) Secondary(x)   No status
+      CODE(2)  => NoName  delimiter(,) Primary(-)                  Status
+      CODE(3)  => NoName  delimiter(,) Primary(del)                Status
+      SBS()    => NoName  delimiter(,) Exp,0,Exp,0.. zero(deleted) Status(V,D,A)               
+      INTER(0) => NoName  delimiter(;)                             Status only(S,M,U)
+      INTER(1) => NoName  delimiter(;)                             Status(S,M,U)
+    
+   If SAS=2 then the result is imported to SAS
+   ========================================================================
+   [Out]      Output data from tau-ARGUS. Default=pivot(1) inter(1).
+   [SAS]      0 - Nothing is imported to SAS.
+              1 - Imports the result report (HTML) to the web browser.
+              2 - Imports the result from tau-Argus to SAS if existing.
+              3 - Both the report and the result is imported.
+
+   ========================================================================
+   Code for total
+   ========================================================================
+   [Total]    (Default=T). Code used for total. 

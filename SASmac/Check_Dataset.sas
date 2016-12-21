@@ -1,0 +1,15 @@
+%macro Check_Dataset(dataset,returnCode);
+   %let returnCode=1;
+   %if &dataset. ^= %str() %then %do;
+      %if not %sysfunc(exist(&dataset.)) %then %do;
+         %let _notes=%sysfunc(getoption(NOTES)); 
+         %put ERROR: ===========================================================================;
+         %put ERROR: Macro: [&sysmacroname];
+         %put ERROR: ---------------------------------------------------------------------------;
+         %put ERROR: The dataset [&dataset] do not exist;
+         %put ERROR: ===========================================================================;
+         %let returnCode=0;
+         options &_notes.;
+      %end;
+   %end;
+%mend Check_Dataset;

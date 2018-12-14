@@ -1,0 +1,14 @@
+//===============================================================================
+// This job based on dataset: APPdat.Population
+//-------------------------------------------------------------------------------
+<LOGBOOK>        "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example2.LOG"
+<OPENMICRODATA>  "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example2.CSV"
+<OPENMETADATA>   "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example2.RDA"
+
+<SPECIFYTABLE>   "Region""Age""Sex"|"Resp"|"Resp"|"Resp",1
+
+<SAFETYRULE>     NK(1,50)|NK(2,80)
+<READMICRODATA>
+<SUPPRESS>       GH(1,40,0)
+
+<WRITETABLE>     (1,5,1,"\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example2_Out_5_1.csv")

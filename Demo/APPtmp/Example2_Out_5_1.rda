@@ -1,0 +1,35 @@
+<SEPARATOR>  ";"
+Region
+    <RECODEABLE>
+    <TOTCODE> Total
+    <HIERARCHICAL>
+    <HIERLEVELS>  2  2  2 
+Age
+    <RECODEABLE>
+    <TOTCODE> Total
+    <HIERARCHICAL>
+    <HIERCODELIST> "\\scb\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\APPdat\Age.hrc"
+    <HIERLEADSTRING> "@"
+Sex
+    <RECODEABLE>
+    <TOTCODE> Total
+Resp
+    <NUMERIC>
+FreqVar
+    <FREQUENCY>
+Resp_Shadow
+    <NUMERIC> <SHADOW>
+Resp_Cost
+    <NUMERIC> <COSTVAR>
+Top1
+    <MAXSCORE>
+Top2
+    <MAXSCORE>
+Top3
+    <MAXSCORE>
+StatusVar
+    <STATUS>
+LowerProtLevel
+    <NUMERIC> <LOWERPL>
+UpperProtLevel
+    <NUMERIC> <UPPERPL>

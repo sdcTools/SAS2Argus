@@ -1,0 +1,25 @@
+<SEPARATOR>  ";"
+Age
+    <RECODEABLE>
+    <TOTCODE> T
+Omk
+    <RECODEABLE>
+    <TOTCODE> T
+Resp
+    <NUMERIC>
+FreqVar
+    <FREQUENCY>
+Resp_Shadow
+    <NUMERIC> <SHADOW>
+Resp_Cost
+    <NUMERIC> <COSTVAR>
+Top1
+    <MAXSCORE>
+Top2
+    <MAXSCORE>
+StatusVar
+    <STATUS>
+LowerProtLevel
+    <NUMERIC> <LOWERPL>
+UpperProtLevel
+    <NUMERIC> <UPPERPL>

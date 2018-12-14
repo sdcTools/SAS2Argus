@@ -1,0 +1,14 @@
+//===============================================================================
+// This job based on dataset: APPdat.TauMicro
+//-------------------------------------------------------------------------------
+<LOGBOOK>        "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example1.LOG"
+<OPENMICRODATA>  "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example1.CSV"
+<OPENMETADATA>   "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example1.RDA"
+
+<SPECIFYTABLE>   "Age""Omk"|"Resp"|"Resp"|"Resp",1
+
+<SAFETYRULE>     P(20,1)
+<READMICRODATA>
+<SUPPRESS>       OPT(1,2)
+
+<WRITETABLE>     (1,5,1,"\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example1_Out_5_1.csv")

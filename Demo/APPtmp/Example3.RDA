@@ -1,0 +1,14 @@
+  <SEPARATOR> ","
+Region    6
+  <RECODABLE>
+  <HIERARCHICAL>
+  <HIERLEVELS>     2 2 2
+Age    3
+  <RECODABLE>
+  <HIERARCHICAL>
+  <HIERCODELIST>   "\\scb\program\gemensamma\net Apps\statprod\sas2argus\demo\appdat\age.Hrc"
+  <HIERLEADSTRING> "@"
+Sex    15
+  <RECODABLE>
+Count    15
+  <NUMERIC>

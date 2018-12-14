@@ -1,0 +1,16 @@
+  <SEPARATOR> ","
+  <SAFE>       S
+  <UNSAFE>     U
+  <PROTECT>    P
+Age
+  <RECODABLE>
+  <TOTCODE> T
+Omk
+  <RECODABLE>
+  <TOTCODE> T
+Resp
+  <NUMERIC>
+Top1
+  <MAXSCORE>
+Top2
+  <MAXSCORE>

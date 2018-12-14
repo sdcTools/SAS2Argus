@@ -1,0 +1,28 @@
+26-jul-2018 14:00:24 : 
+26-jul-2018 14:00:25 : Log for batch run: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example1.ARB
+26-jul-2018 14:00:25 : Command: <LOGBOOK>        "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example1.LOG"
+26-jul-2018 14:00:25 : Command: <OPENMICRODATA>  "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example1.CSV"
+26-jul-2018 14:00:25 : Command: <OPENMETADATA>   "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example1.RDA"
+26-jul-2018 14:00:25 : Command: 
+26-jul-2018 14:00:25 : Command: <SPECIFYTABLE>   "Age""Omk"|"Resp"|"Resp"|"Resp",1
+26-jul-2018 14:00:25 : Command: 
+26-jul-2018 14:00:25 : Command: <SAFETYRULE>     P(20,1)
+26-jul-2018 14:00:25 : Command: <READMICRODATA>
+26-jul-2018 14:00:25 : Start preparing for tabulation
+26-jul-2018 14:00:25 : Table 1: Age x Omk | Resp
+26-jul-2018 14:00:25 : Start explore file: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example1.CSV
+26-jul-2018 14:00:25 : Start computing tables
+26-jul-2018 14:00:25 : Compute tables completed
+26-jul-2018 14:00:25 : Command: <SUPPRESS>       OPT(1,2)
+26-jul-2018 14:00:25 : Start FullJJ optimisation
+26-jul-2018 14:00:25 : Full JJ optimisation finished successfully
+26-jul-2018 14:00:26 : Table has been protected by the Full optimisation method
+                          4 cells have been suppressed
+                          1 sec needed
+26-jul-2018 14:00:26 : Command: 
+26-jul-2018 14:00:26 : Command: <WRITETABLE>     (1,5,1,"\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example1_Out_5_1.csv")
+26-jul-2018 14:00:26 : Table no: 1 has been saved
+                         FileName: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example1_Out_5_1.csv
+                         as Save table in intermediate format
+26-jul-2018 14:00:26 : Table (1) written to file: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example1_Out_5_1.csv
+26-jul-2018 14:00:26 : End of batch run: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example1.ARB

@@ -1,0 +1,30 @@
+26-jul-2018 14:00:33 : 
+26-jul-2018 14:00:33 : Log for batch run: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example2.ARB
+26-jul-2018 14:00:33 : Command: <LOGBOOK>        "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example2.LOG"
+26-jul-2018 14:00:33 : Command: <OPENMICRODATA>  "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example2.CSV"
+26-jul-2018 14:00:33 : Command: <OPENMETADATA>   "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example2.RDA"
+26-jul-2018 14:00:33 : Command: 
+26-jul-2018 14:00:34 : Command: <SPECIFYTABLE>   "Region""Age""Sex"|"Resp"|"Resp"|"Resp",1
+26-jul-2018 14:00:34 : Command: 
+26-jul-2018 14:00:34 : Command: <SAFETYRULE>     NK(1,50)|NK(2,80)
+26-jul-2018 14:00:34 : Command: <READMICRODATA>
+26-jul-2018 14:00:34 : Start preparing for tabulation
+26-jul-2018 14:00:34 : Table 1: Region x Age x Sex | Resp
+26-jul-2018 14:00:34 : Start explore file: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example2.CSV
+26-jul-2018 14:00:35 : Start computing tables
+26-jul-2018 14:00:39 : Compute tables completed
+26-jul-2018 14:00:39 : Command: <SUPPRESS>       GH(1,40,0)
+26-jul-2018 14:00:40 : Start GHMiter
+26-jul-2018 14:00:43 : Some (490) cells could not be fully protected
+                         See report file for details
+26-jul-2018 14:00:43 : GHMiter finished successfully
+26-jul-2018 14:00:43 : Table has been protected by the Hypercube method
+                          719 cells have been suppressed
+                          3 sec needed
+26-jul-2018 14:00:43 : Command: 
+26-jul-2018 14:00:43 : Command: <WRITETABLE>     (1,5,1,"\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example2_Out_5_1.csv")
+26-jul-2018 14:00:43 : Table no: 1 has been saved
+                         FileName: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example2_Out_5_1.csv
+                         as Save table in intermediate format
+26-jul-2018 14:00:45 : Table (1) written to file: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example2_Out_5_1.csv
+26-jul-2018 14:00:45 : End of batch run: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example2.ARB

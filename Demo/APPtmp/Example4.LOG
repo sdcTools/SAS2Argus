@@ -1,0 +1,24 @@
+26-jul-2018 14:01:21 : 
+26-jul-2018 14:01:21 : Log for batch run: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example4.ARB
+26-jul-2018 14:01:21 : Command: <LOGBOOK>        "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example4.LOG"
+26-jul-2018 14:01:21 : Command: <OPENTABLEDATA>  "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example4.CSV"
+26-jul-2018 14:01:21 : Command: <OPENMETADATA>   "\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example4.RDA"
+26-jul-2018 14:01:21 : Command: 
+26-jul-2018 14:01:21 : Command: <SPECIFYTABLE>   "Age""Omk"|"Resp"|"Resp"|"Resp",1
+26-jul-2018 14:01:21 : Command: 
+26-jul-2018 14:01:21 : Command: <SAFETYRULE>     P(20,1)
+26-jul-2018 14:01:21 : Command: <READTABLE>      1
+26-jul-2018 14:01:21 : Start reading table from file: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example4.CSV
+26-jul-2018 14:01:21 : Command: <SUPPRESS>       MOD(1,1)
+26-jul-2018 14:01:21 : Start Modular optimisation
+26-jul-2018 14:01:21 : MODULAR finished successfully
+26-jul-2018 14:01:21 : Table has been protected by the Modular Optimisation method
+                          7 cells have been suppressed
+                          0 sec needed
+26-jul-2018 14:01:21 : Command: 
+26-jul-2018 14:01:21 : Command: <WRITETABLE>     (1,5,1,"\\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example4_Out_5_1.csv")
+26-jul-2018 14:01:21 : Table no: 1 has been saved
+                         FileName: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example4_Out_5_1.csv
+                         as Save table in intermediate format
+26-jul-2018 14:01:22 : Table (1) written to file: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example4_Out_5_1.csv
+26-jul-2018 14:01:22 : End of batch run: \\SCB\program\Gemensamma\Net apps\StatProd\SAS2Argus\Demo\Apptmp\Example4.ARB

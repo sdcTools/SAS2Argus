@@ -26,19 +26,8 @@
  Changes:      2012-10-16/ak HierLevels now works even if entered numeric thou
                              TauArgus always expect it to be char. But only
                              for one occurcy of a HierLevels parameter.
+               2016-12-22/L-E.A Default is now not to write missing code (9999999).
  --------------------------------------------------------------------------*/
-
-/*--------------------------------------------------------------------
-CHANGES FOR VERSION 4.0
-
-2016-11-09/L-E.A    Removed " around VarName, row 545
-                    Removed _Varmiss (999999) as missing because we don´t need it. It only creates problems.
-
-CHANGES FOR VERSION 4.1
-
-2016-12-20/L-E.A    Removed <SHADOW> and <COST> in the metadata file when we use microdata
- --------------------------------------------------------------------*/
-
 
 /*#########################################################################*/
 %macro Write_Datafile(Dataset=, Datafile=, Metafile=)
@@ -214,8 +203,8 @@ CHANGES FOR VERSION 4.1
    data _null_;
       set  work._variable_meta;
 
-      length _VarLen  $ 12
-             /*_VarMiss $ 12*/;                                                         /* 4.0/L-E.A    Removed _Varmiss*/ 
+      length _VarLen  $ 12;         
+      %if &missing=1 %then length _VarMiss $ 12;;                        /* Alternative for missing      16-12-22    L-E.A */
 
       file _TAU_RDA;
 
@@ -250,15 +239,15 @@ CHANGES FOR VERSION 4.1
        --------------------------------------------------------------------*/
       if lengthn(HierLevels) then do;
          _VarLen  = "&_HierLen";      /* Note: This is a calculated length */
-         /*_VarMiss = substr('999999999999999',1,_VarLen);*/                        /* 4.0/L-E.A    Removed _Varmiss*/ 
+         %if &missing=1 %then _VarMiss = substr('999999999999999',1,_VarLen);;       /* Alternative for missing      16-12-22    L-E.A */
       end;
       else if VarType='C' then do;
          _VarLen  = put(VarLen,best.); 
-         /*_VarMiss = substr('999999999999999',1,VarLen);*/                         /* 4.0/L-E.A    Removed _Varmiss*/ 
+         %if &missing=1 %then _VarMiss = substr('999999999999999',1,VarLen);;        /* Alternative for missing      16-12-22    L-E.A */
       end;
       else do;
          _VarLen  = '15';
-         /*_VarMiss = '';*/                                                         /* 4.0/L-E.A    Removed _Varmiss*/ 
+         %if &missing=1 %then _VarMiss = '';;                                        /* Alternative for missing      16-12-22    L-E.A */
       end;
 
 
@@ -269,7 +258,7 @@ CHANGES FOR VERSION 4.1
        --------------------------------------------------------------------*/
       if VarRole not in('SH','CO','WE') then do;
          %if %bquote(&intable.)=%str() %then %do;
-            put VarNameTAU  +3 _VarLen /*+5 _VarMiss*/;                             /* 4.0/L-E.A    Removed _Varmiss*/ 
+            put VarNameTAU  +3 _VarLen %if &missing=1 %then +5 _VarMiss;;           /* Alternative for missing      16-12-22    L-E.A */
          %end;
          %else %do;
             put VarNameTAU;
@@ -284,11 +273,11 @@ CHANGES FOR VERSION 4.1
        --------------------------------------------------------------------*/
       else do;
          /*----------------------------------------------------------------
-          2013-04-09/LE.A  Så vi får length på WEIGHT, SHADOW och COST
+          2013-04-09/LE.A  So that we get length on WEIGHT, SHADOW och COST
          -----------------------------------------------------------------*/
-         if VarRole='SH' then put "&Shadow" +3 _VarLen /*+5 _VarMiss*/;             /* 4.0/L-E.A    Removed _Varmiss*/ 
-         if VarRole='CO' then put "&Cost"   +3 _VarLen /*+5 _VarMiss*/;             /* 4.0/L-E.A    Removed _Varmiss*/ 
-         if VarRole='WE' then put "&Weight" +3 _VarLen /*+5 _VarMiss*/;             /* 4.0/L-E.A    Removed _Varmiss*/ 
+         if VarRole='SH' then put "&Shadow" +3 _VarLen %if &missing=1 %then +5 _VarMiss;;   /* Alternative for missing      16-12-22    L-E.A */
+         if VarRole='CO' then put "&Cost"   +3 _VarLen %if &missing=1 %then +5 _VarMiss;;   /* Alternative for missing      16-12-22    L-E.A */
+         if VarRole='WE' then put "&Weight" +3 _VarLen %if &missing=1 %then +5 _VarMiss;;   /* Alternative for missing      16-12-22    L-E.A */
       end;
 
       /*--------------------------------------------------------------------
@@ -378,12 +367,12 @@ CHANGES FOR VERSION 4.1
        --------------------------------------------------------------------*/
       %else %do;
          if VarRole='SH' then do;
-                            put "  <NUMERIC> "/*<SHADOW>*/;                             /* 4.1/L-E.A    Removed <SHADOW> */ 
+                            put "  <NUMERIC> <SHADOW>";
             if VarFmtD then put "  <DECIMALS>"    @20 VarFmtD;
          end;
 
          if VarRole='CO' then do;
-                            put "  <NUMERIC> "/*<COST>*/;                               /* 4.1/L-E.A    Removed <COST> */ 
+                            put "  <NUMERIC> <COST>";
             if VarFmtD then put "  <DECIMALS>"    @20 VarFmtD;
          end;
 
@@ -546,8 +535,7 @@ CHANGES FOR VERSION 4.1
        If EXPLANATORY => Quote
        --------------------------------------------------------------------*/
       if VarRole='EX' then do;
-         _syntax=cats(strip(_syntax),VarName,",");
-         /*_syntax=cats(strip(_syntax),"quote(strip(",VarName,")),");*/                         /* 4.0/L-E.A    Removed " around VarName */
+         _syntax=cats(strip(_syntax),"quote(strip(",VarName,")),");
       end;
 
       /*--------------------------------------------------------------------

@@ -13,14 +13,6 @@
  ---------------------------------------------------------------------------
  Changes:     
  --------------------------------------------------------------------------*/
-
-/*--------------------------------------------------------------------
-CHANGES FOR VERSION 4.0
-
-2016-11-09/L-E.A    Checks the log for the word "error".
- --------------------------------------------------------------------*/
-
-
 %macro Check_TauLog(Logfile);
 
    %let _notes=%sysfunc(getoption(NOTES));
@@ -50,8 +42,6 @@ CHANGES FOR VERSION 4.0
          Check for other errors
          --------------------------------------------------------------------*/
          if indexw(_infile_,"Program abnormally terminated") then Abend="1";
-         else if find(_infile_, "Error") or find(_infile_, "error")                 /* 4.0/L-E.A checks the log for the word error */ 
-                        or find(_infile_, "ERROR") then Abend="1";
 
          if eof then do;
             call symput('XPress',Xpress);

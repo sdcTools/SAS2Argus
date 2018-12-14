@@ -15,27 +15,8 @@
  Note:         A quit "clumsy" solution - but there is not open ways to
                "reach" the SAS internal browsern from the "outside", a fact
                confirmed by SAS Institute support, Sweden. 
-
- Changes:      2016-11-15/ak   The old code didn´t work any more. A new macro was created and the old one was named %macro _comment.
-                               The new macro export the HTML-report to the web browser.
  --------------------------------------------------------------------------*/
-
-/*====================================================================
- Easy solution to just route the HTML-file to an external browser
- --------------------------------------------------------------------*/
 %macro Present_HTML(Htmlfile)
-   /Des="Presents tau-ARGUS HTML-file in the External Browser";
-
-    option NOxwait NOXSYNC;
-    data _null_;
-       DM "wbrowse ""&htmlfile."" ";
-    run;
-
-%mend Present_HTML;
-
-
-
-%macro _comment(Htmlfile)
    /Des="Presents tau-ARGUS HTML-file in the SAS Browser";
 
    %local _Htmlpath _Htmlfile;
@@ -67,8 +48,8 @@
     Note: ODS MARKUP TEXT demands a quoted string in its syntax. Therefore!!
     --------------------------------------------------------------------------*/
    data _null_;
-      infile html_in lrecl=2500 truncover;
-      input _row $2500.;
+      infile html_in lrecl=500 truncover;
+      input _row $500.;
       file html_cmd;
 
       if findc(_row,"'") then _row=tranwrd(_row,"'","''");
@@ -112,17 +93,18 @@
 
    ODS markup file="%bquote(&_Htmlpath.\&_Htmlout.)" newfile=NONE /* html_out */;
       proc print data=htmlout noobs label; run;
-      %include html_cmd;
+      %include html_cmd; 
    ODS markup close;
 
-   options &_source. &_source2. &_mprint.;;
+   options &_source &_source2 &_mprint;
+
 
    /*-----------------------------------------------------------------------
     Unassign
     -----------------------------------------------------------------------*/
    filename html_in  clear; 
    filename html_cmd clear;
-   
+
 
    /*-----------------------------------------------------------------------
     Exit
@@ -130,6 +112,4 @@
    %exit:
    title1;
 
-%mend _comment;
-
-
+%mend Present_HTML;

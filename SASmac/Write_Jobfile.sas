@@ -22,19 +22,6 @@
                              Ie "T". 
                2013-06-11/ak The parameter "compute missing totals" is reset
  --------------------------------------------------------------------------*/
-
-/*--------------------------------------------------------------------
-CHANGES FOR VERSION 4.0
-
-2016-11-09/L-E.A    Removed <LOGFILE> because it doesn´t work
-                    Added compress in <SAFETYRULE>
-                    Removed &_parm in the third parameter in <WRITEFILE>
-
-CHANGES FOR VERSION 4.1
-2016-12-19/L-E.A    <LOGFILE> works without "" round the file name.
-                    Removed two "" round the path for <LOGFILE>.
- --------------------------------------------------------------------*/
-
 %macro Write_Jobfile(Jobfile)
    /Des="Defines and writes the tau-Argus command file (ARB)";
 
@@ -72,10 +59,10 @@ CHANGES FOR VERSION 4.1
    %if &response.=%str() %then %let _Response = &Frequency;
                          %else %let _Response = &Response;
 
-   %if &shadow.  =%str() %then %let _Shadow   = &_Response;                         
+   %if &shadow.  =%str() %then %let _Shadow   = &_Response; 
                          %else %let _Shadow   = &Shadow;
 
-   %if &cost.    =%str() %then %let _Cost     = &_Response;                           
+   %if &cost.    =%str() %then %let _Cost     = &_Response; 
                          %else %let _Cost     = &Cost;
 
    %if &lambda.  =%str() %then %let _Lambda   = 1;
@@ -127,8 +114,7 @@ CHANGES FOR VERSION 4.1
          put @1 "//-------------------------------------------------------------------------------";
 
 
-         put @1 "<LOGBOOK>"         @18 "&PATH_tmp.\&jobname..LOG";                   /* 4.1/L-E.A    Removed two "" round the path */  
-         /*put @1 "<LOGBOOK>"         @18 """&PATH_tmp.\&jobname..LOG""";*/           /* Alternative */
+         put @1 "<LOGBOOK>"         @18 """&PATH_tmp.\&jobname..LOG""";
 
       /*--------------------------------------------------------------------
        <OPENMICRODATA> or <OPENTABLEDATA> 
@@ -160,7 +146,7 @@ CHANGES FOR VERSION 4.1
        Note: First two P-rules for entities. Third is for the holding 
        --------------------------------------------------------------------*/
       %if %length(&safetyrule.) %then %do;
-         put @1 "<SAFETYRULE>"      @18 %sysfunc(compress("&Safetyrule"));                          /* 4.0/L-E.A    Added compress */
+         put @1 "<SAFETYRULE>"      @18 "&Safetyrule";
       %end;
 
 
@@ -217,19 +203,19 @@ CHANGES FOR VERSION 4.1
           <WRITETABLE>
           -----------------------------------------------------------------*/
          %if &_type.=TABLE %then %do;
-            put @1 "<WRITETABLE>"   @18 "(1,1,,""" "&PATH_tmp.\&jobname._Out_1_&_parm..csv" '")';                       /* 4.0/L-E.A    Removed &_parm */
+            put @1 "<WRITETABLE>"   @18 "(1,1,&_parm,""" "&PATH_tmp.\&jobname._Out_1_&_parm..csv" '")';
          %end;
          %if &_type.=PIVOT %then %do;
-            put @1 "<WRITETABLE>"   @18 "(1,2,,""" "&PATH_tmp.\&jobname._Out_2_&_parm..csv" '")';                       /* 4.0/L-E.A    Removed &_parm */
+            put @1 "<WRITETABLE>"   @18 "(1,2,&_parm,""" "&PATH_tmp.\&jobname._Out_2_&_parm..csv" '")';
          %end;
          %if &_type.=CODE %then %do;
-            put @1 "<WRITETABLE>"   @18 "(1,3,,""" "&PATH_tmp.\&jobname._Out_3_&_parm..csv" '")';                       /* 4.0/L-E.A    Removed &_parm */
+            put @1 "<WRITETABLE>"   @18 "(1,3,&_parm,""" "&PATH_tmp.\&jobname._Out_3_&_parm..csv" '")';
          %end;
          %if &_type.=SBS %then %do;
-            put @1 "<WRITETABLE>"   @18 "(1,4,,""" "&PATH_tmp.\&jobname._Out_4_&_parm..csv" '")';                       /* 4.0/L-E.A    Removed &_parm */
+            put @1 "<WRITETABLE>"   @18 "(1,4,&_parm,""" "&PATH_tmp.\&jobname._Out_4_&_parm..csv" '")';
          %end;
          %if &_type.=INTER %then %do;
-            put @1 "<WRITETABLE>"   @18 "(1,5,,""" "&PATH_tmp.\&jobname._Out_5_&_parm..csv" '")';                       /* 4.0/L-E.A    Removed &_parm */
+            put @1 "<WRITETABLE>"   @18 "(1,5,&_parm,""" "&PATH_tmp.\&jobname._Out_5_&_parm..csv" '")';
          %end;
 
          %let _nr=%eval(&_nr+1);

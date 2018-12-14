@@ -30,16 +30,6 @@
                2014-11-27/ak Included DSD in the infile _TAU_CSV statement to
                              fix a (randomly appearing) problem.
  --------------------------------------------------------------------------*/
-
-/*--------------------------------------------------------------------
-CHANGES FOR VERSION 4.0
-
-2016-11-09/L-E.A    Included a counter for the number of explanatory so that we can name the variables with _Shadow and _Cost
-                    to get the same naming as with tau-Argus version 3.5.0.
-                    Included naming of _Shadow and _Cost
- --------------------------------------------------------------------*/
-
-
 %macro Read_Datafile(Datafile=, Dataset=, Metafile=, GetNames=)
    /Des="Imports a DATA text file to a SAS-dataset with use of the META file";
 
@@ -68,9 +58,7 @@ CHANGES FOR VERSION 4.0
     Does this file exists => Check
     -----------------------------------------------------------------------*/
    %else %do;
-      /*filename _TAU_CSV "&PATH_tmp.\&jobname._Out_5_&_parm..csv";
-      %let _exist=%sysfunc(fexist(_TAU_CSV));*/
-      filename _TAU_CSV "&datafile";
+      filename _TAU_CSV "&PATH_tmp.\&jobname._Out_5_&_parm..csv";
       %let _exist=%sysfunc(fexist(_TAU_CSV));
 
       %if &_exist=0 %then %do;
@@ -135,7 +123,7 @@ CHANGES FOR VERSION 4.0
 
    data _null_;
       infile _TAU_CSV lrecl=2000 dsd;
-      input _row $300.;                                         /* 16-11-15 tagit bort : framför $300   L-E.A */      
+      input _row $300.;                                    /* 16-11-15 tagit bort : framför $300   L-E.A */  
 
       _comma=countc(_row,',');
       _semi =countc(_row,';');
@@ -253,16 +241,6 @@ CHANGES FOR VERSION 4.0
    filename _TAU_RDA "&_Metafile";
    filename _rename temp;
 
-   /*--------------------------------------------------------------------
-    4.0/L-E.A  Included a counter for the number of explanatory so that we can name the variables with _Shadow and _Cost
-    to get the same naming as with tau-Argus version 3.5.0.
-     --------------------------------------------------------------------*/
-   data _null_;
-      set _variable_meta end=eof;
-      if VarRole='EX' then antal_exp + 1;
-      if eof then call symputx('antal_exp', antal_exp);
-   run;
-
    data _null_;
       length _text $ 200;
       infile _TAU_RDA truncover; /* The Meta Data file describing the data */
@@ -281,9 +259,7 @@ CHANGES FOR VERSION 4.0
             _nr+1;
             OldName=cats('VAR',_nr);   /* Construct the "old name"         */
          /* VarName=prxchange('s/<freq>/_freq_/',-1,Varname);    Change    */
-            if _nr=&antal_exp + 3       then VarName=cats(propcase(VarName), '_Shadow');                        /* 4.0/L-E.A    included */
-            else if _nr=&antal_exp + 4  then VarName=cats(propcase(VarName), '_Cost');                          /* 4.0/L-E.A    included */
-            else VarName=propcase(VarName); /* Variable name in proper case     */
+            VarName=propcase(VarName); /* Variable name in proper case     */
             output;
             _text = cats(OldName,"=",VarName); 
             put _text;                 /* Write to temp file (for include) */

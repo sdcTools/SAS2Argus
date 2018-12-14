@@ -42,8 +42,16 @@
          /*-----------------------------------------------------------------
           Check if we can find the exe in this location instead
           -----------------------------------------------------------------*/
-	     %if %sysfunc(fileexist(%str(C:\Program Files (x86)\TauArgus\TauArgus.exe))) %then %do;
-		    %let PATH_exe=C:\Program Files (x86)\TauArgus\TauArgus.exe;
+	     %if %sysfunc(fileexist(%str(C:\Program Files (x86)\TauArgus\TauArgus.exe))) 
+                    or %sysfunc(fileexist(%str(C:\Program Files\TauArgus\TauArgus.exe))) %then %do;
+
+            %if %sysfunc(fileexist(%str(C:\Program Files\TauArgus\TauArgus.exe))) %then %do;
+		      %let PATH_exe=C:\Program Files\TauArgus\TauArgus.exe;
+            %end;
+            %else %if %sysfunc(fileexist(%str(C:\Program Files (x86)\TauArgus\TauArgus.exe))) %then %do;
+		      %let PATH_exe=C:\Program Files (x86)\TauArgus\TauArgus.exe;
+            %end;
+
 			%let _notes=%sysfunc(getoption(NOTES));
 		   options notes; 
 		   %put NOTE: ===========================================================================;
@@ -54,6 +62,7 @@
 		   %put NOTE: ===========================================================================;
 		   options &_notes.;
 		 %end;
+
 		 %else %do;
 	         %put ERROR: ===========================================================================;
 	         %put ERROR: Macro: [&sysmacroname];

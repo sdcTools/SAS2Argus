@@ -18,22 +18,8 @@
  Date:         2011-03-23
  Comment:      
  ---------------------------------------------------------------------------
-Changes:        2016-11-15  Changed possible values for parameter SAS:      Lars-Erik Almberg 
-                SAS=1       HTML only
-                SAS=2       back to SAS only
-                SAS=3       HTML and back to SAS
+ Changes:           
  ==========================================================================*/
-
-/*--------------------------------------------------------------------
-CHANGES FOR VERSION 4.0
-
-2016-11-09/L-E.A    Delete the permanent log, row 165
-
-CHANGES FOR VERSION 4.1
-2016-12-19/L-E.A    Removed the Delete the permanent log
- --------------------------------------------------------------------*/
-
-
 
 /*==========================================================================
  SAS2Argus
@@ -146,9 +132,15 @@ CHANGES FOR VERSION 4.1
       INTER(0) => NoName  delimiter(;)                             Status only(S,M,U)
       INTER(1) => NoName  delimiter(;)                             Status(S,M,U)
     
-    If SAS=2 or 3 then output is imported to SAS
+    If SAS=2 then output is imported to SAS
     -----------------------------------------------------------------------*/
-   Out=inter(1)
+   Out=inter(1),
+
+   /*====================================================================
+    New parameter to control missing code 999999, default 0 => no code for missing.
+    16-12-22 (Merry Christmas)   L-E.A
+    --------------------------------------------------------------------*/
+    Missing=0
 
    )
    /Des="Bridge between SAS and tau-ARGUS";
@@ -338,8 +330,7 @@ CHANGES FOR VERSION 4.1
 
 
       /*====================================================================
-       Check conformity between designated variable roles and actual variables 
-       in the dataset.
+       Finds out the exact number of decimals in data
        --------------------------------------------------------------------*/
       %Variable_Decimals(&_dataset.)
       %if &syserr. %then %goto exit;
@@ -462,6 +453,7 @@ CHANGES FOR VERSION 4.1
        --------------------------------------------------------------------*/
       %Check_TauLog(Logfile=%bquote(&PATH_tmp.\&jobname..LOG))
 
+
    %end;
 
 
@@ -494,7 +486,7 @@ CHANGES FOR VERSION 4.1
    %end;
 
    /*-----------------------------------------------------------------------
-    If no Debug => Clean up       
+    If no Debug => Clean up
     -----------------------------------------------------------------------*/
    %else %do;
       proc datasets lib=work nolist;

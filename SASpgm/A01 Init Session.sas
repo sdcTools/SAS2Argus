@@ -40,12 +40,16 @@
  ERROR: At least one file associated with fileref SYSMAC is still in use.
  ERROR: Error in the FILENAME statement.
  --------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------
 %macro Fileref/Des="Sets filename reference";
    %let _ref=SASpgm; %let _rc=%sysfunc(filename(_ref, &PATH_sys.\SASpgm));
    %let _ref=SASmac; %let _rc=%sysfunc(filename(_ref, &PATH_sys.\SASmac));
 %mend;
 %Fileref;
 proc catalog cat=work.sasmacr; delete fileref.macro; run; quit; 
+ --------------------------------------------------------------------------*/
+%let _ref=SASpgm; %let _rc=%sysfunc(filename(_ref, &PATH_sys.\SASpgm));
+%let _ref=SASmac; %let _rc=%sysfunc(filename(_ref, &PATH_sys.\SASmac));
 
 
 /*==========================================================================
